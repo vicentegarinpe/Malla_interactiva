@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Malla Curricular Interactiva</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Malla Curricular Interactiva</h1>
+        <div id="setup">
+            <input type="text" id="nombreCarrera" placeholder="Ingresa tu carrera">
+            <button onclick="crearCarrera()">Iniciar</button>
+        </div>
+        <div id="mallaContainer" class="hidden">
+            <h2 id="tituloCarrera"></h2>
+            <button onclick="agregarRamo()">Agregar Ramo</button>
+            <div id="malla"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

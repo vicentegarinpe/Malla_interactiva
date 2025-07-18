@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+input, button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px;
+}
+
+#setup, #mallaContainer {
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.ramo {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    background-color: #e0e7ff;
+    cursor: pointer;
+    position: relative;
+}
+
+.ramo.aprobado {
+    background-color: #c8e6c9;
+    text-decoration: line-through;
+}
+
+.ramo.bloqueado {
+    background-color: #f8d7da;
+    cursor: not-allowed;
+}
+
+.ramo:hover .tooltip {
+    display: block;
+}
+
+.tooltip {
+    display: none;
+    position: absolute;
+    top: -10px;
+    left: 110%;
+    background: #333;
+    color: white;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 4px;
+    max-width: 200px;
+}
