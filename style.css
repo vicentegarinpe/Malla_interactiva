@@ -1,3 +1,16 @@
+:root {
+    --color-fondo: #f5f7fa;
+    --color-columna-ciclo-fondo: #f0f4ff;
+    --color-columna-ciclo-titulo: #1e40af;
+    --color-ramo-fondo: #dbeafe;
+    --color-ramo-aprobado: #c8facc;
+    --color-ramo-aprobado-texto: #2e7d32;
+    --color-ramo-aprobado-check: green;
+    --color-ramo-bloqueado: #f8d7da;
+    --color-tooltip-fondo: #333;
+    --color-tooltip-texto: white;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f7fa;
@@ -6,7 +19,7 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1200px; /* aumenté el ancho máximo */
     margin: auto;
     background: white;
     padding: 20px;
@@ -28,39 +41,80 @@ input, button {
     display: none;
 }
 
+#malla {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 20px;
+    min-height: 600px; /* altura mínima para que no se achique */
+}
+
+.columna-ciclo {
+    min-width: 300px; /* columnas más anchas */
+    flex: 0 0 auto;
+    background-color: #f0f4ff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.columna-ciclo h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #1e40af;
+}
+
 .ramo {
     border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 8px;
-    background-color: #e0e7ff;
-    cursor: pointer;
+    padding: 25px 15px; /* más alto y ancho */
+    border-radius: 10px;
+    background-color: #dbeafe;
     position: relative;
+    transition: 0.3s;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
 }
 
 .ramo.aprobado {
-    background-color: #c8e6c9;
+    background-color: #c8facc;
     text-decoration: line-through;
+    color: #2e7d32;
+    position: relative;
+}
+
+.ramo.aprobado::after {
+    content: "✓";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: green;
 }
 
 .ramo.bloqueado {
     background-color: #f8d7da;
+    opacity: 0.7;
     cursor: not-allowed;
-}
-
-.ramo:hover .tooltip {
-    display: block;
 }
 
 .tooltip {
     display: none;
     position: absolute;
     top: -10px;
-    left: 110%;
+    left: 105%;
     background: #333;
     color: white;
     padding: 5px;
     font-size: 12px;
     border-radius: 4px;
-    max-width: 200px;
+    width: 150px;
+    z-index: 10;
+}
+
+.ramo:hover .tooltip {
+    display: block;
 }

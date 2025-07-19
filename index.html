@@ -1,24 +1,79 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Malla Curricular Interactiva</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* Opcional: pequeño estilo para el selector */
+        #colorSettings {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        #colorSettings label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        #colorSettings input[type="color"] {
+            margin-right: 20px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Malla Curricular Interactiva</h1>
         <div id="setup">
-            <input type="text" id="nombreCarrera" placeholder="Ingresa tu carrera">
+            <input type="text" id="nombreCarrera" placeholder="Ingresa tu carrera" />
             <button onclick="crearCarrera()">Iniciar</button>
         </div>
+        
         <div id="mallaContainer" class="hidden">
             <h2 id="tituloCarrera"></h2>
+            
+            <!-- Controles para cambiar colores -->
+            <div id="colorSettings">
+                <label for="colorFondo">Fondo:</label>
+                <input type="color" id="colorFondo" value="#f5f7fa" />
+                
+                <label for="colorRamo">Ramo:</label>
+                <input type="color" id="colorRamo" value="#dbeafe" />
+                
+                <label for="colorAprobado">Ramo Aprobado:</label>
+                <input type="color" id="colorAprobado" value="#c8facc" />
+                
+                <label for="colorBloqueado">Ramo Bloqueado:</label>
+                <input type="color" id="colorBloqueado" value="#f8d7da" />
+            </div>
+            
             <button onclick="agregarRamo()">Agregar Ramo</button>
+            <button onclick="reiniciarProgreso()">Reiniciar Progreso</button>
             <div id="malla"></div>
         </div>
     </div>
-    
     <script src="script.js"></script>
+    <script>
+        // Función para actualizar las variables CSS según los inputs color
+        function actualizarColores() {
+            const root = document.documentElement;
+            root.style.setProperty('--color-fondo', document.getElementById('colorFondo').value);
+            root.style.setProperty('--color-ramo-fondo', document.getElementById('colorRamo').value);
+            root.style.setProperty('--color-ramo-aprobado', document.getElementById('colorAprobado').value);
+            root.style.setProperty('--color-ramo-bloqueado', document.getElementById('colorBloqueado').value);
+        }
+
+        // Evento para actualizar colores cuando cambien los inputs
+        document.getElementById('colorFondo').addEventListener('input', actualizarColores);
+        document.getElementById('colorRamo').addEventListener('input', actualizarColores);
+        document.getElementById('colorAprobado').addEventListener('input', actualizarColores);
+        document.getElementById('colorBloqueado').addEventListener('input', actualizarColores);
+
+        // Inicializar con los valores por defecto al cargar la página
+        window.onload = actualizarColores;
+    </script>
 </body>
 </html>
