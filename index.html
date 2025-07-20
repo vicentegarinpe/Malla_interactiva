@@ -4,25 +4,6 @@
     <meta charset="UTF-8" />
     <title>Malla Curricular Interactiva</title>
     <link rel="stylesheet" href="style.css" />
-    <style>
-        /* Opcional: pequeño estilo para el selector */
-        #colorSettings {
-            margin: 15px 0;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background: #fafafa;
-        }
-        #colorSettings label {
-            margin-right: 10px;
-            font-weight: bold;
-        }
-        #colorSettings input[type="color"] {
-            margin-right: 20px;
-            vertical-align: middle;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -55,25 +36,7 @@
             <div id="malla"></div>
         </div>
     </div>
+    
     <script src="script.js"></script>
-    <script>
-        // Función para actualizar las variables CSS según los inputs color
-        function actualizarColores() {
-            const root = document.documentElement;
-            root.style.setProperty('--color-fondo', document.getElementById('colorFondo').value);
-            root.style.setProperty('--color-ramo-fondo', document.getElementById('colorRamo').value);
-            root.style.setProperty('--color-ramo-aprobado', document.getElementById('colorAprobado').value);
-            root.style.setProperty('--color-ramo-bloqueado', document.getElementById('colorBloqueado').value);
-        }
-
-        // Evento para actualizar colores cuando cambien los inputs
-        document.getElementById('colorFondo').addEventListener('input', actualizarColores);
-        document.getElementById('colorRamo').addEventListener('input', actualizarColores);
-        document.getElementById('colorAprobado').addEventListener('input', actualizarColores);
-        document.getElementById('colorBloqueado').addEventListener('input', actualizarColores);
-
-        // Inicializar con los valores por defecto al cargar la página
-        window.onload = actualizarColores;
-    </script>
 </body>
 </html>

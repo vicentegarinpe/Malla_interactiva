@@ -13,7 +13,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f7fa;
+    background-color: var(--color-fondo);
     margin: 0;
     padding: 20px;
 }
@@ -50,19 +50,19 @@ input, button {
     min-height: 600px; /* altura mínima para que no se achique */
 }
 
-.columna-ciclo {
-    min-width: 300px; /* columnas más anchas */
+.columna-semestre {  /* Cambié "ciclo" a "semestre" */
+    min-width: 300px; /* Columnas más anchas */
     flex: 0 0 auto;
-    background-color: #f0f4ff;
+    background-color: var(--color-columna-ciclo-fondo);
     border-radius: 8px;
     padding: 10px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.columna-ciclo h3 {
+.columna-semestre h3 {  /* Cambié "columna-ciclo" a "columna-semestre" */
     text-align: center;
     margin-bottom: 10px;
-    color: #1e40af;
+    color: var(--color-columna-ciclo-titulo);
 }
 
 .ramo {
@@ -80,9 +80,9 @@ input, button {
 }
 
 .ramo.aprobado {
-    background-color: #c8facc;
+    background-color: var(--color-ramo-aprobado);
     text-decoration: line-through;
-    color: #2e7d32;
+    color: var(--color-ramo-aprobado-texto);
     position: relative;
 }
 
@@ -92,11 +92,11 @@ input, button {
     top: 10px;
     right: 10px;
     font-size: 20px;
-    color: green;
+    color: var(--color-ramo-aprobado-check);
 }
 
 .ramo.bloqueado {
-    background-color: #f8d7da;
+    background-color: var(--color-ramo-bloqueado);
     opacity: 0.7;
     cursor: not-allowed;
 }
@@ -106,8 +106,8 @@ input, button {
     position: absolute;
     top: -10px;
     left: 105%;
-    background: #333;
-    color: white;
+    background: var(--color-tooltip-fondo);
+    color: var(--color-tooltip-texto);
     padding: 5px;
     font-size: 12px;
     border-radius: 4px;

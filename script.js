@@ -23,8 +23,6 @@ function crearCarrera() {
     } else {
         if (carrera === "Ingeniería Civil en Informática") {
             precargarMalla();
-        } else if (carrera === "Psicología") {
-            cargarMallaPsicologia();  // Cargar malla de Psicología
         } else {
             ramos = [];
             renderMalla();
@@ -44,7 +42,10 @@ function agregarRamo() {
     const ciclo = prompt("¿A qué ciclo o semestre pertenece este ramo? (Ej: I, II, III...)");
     if (!ciclo) return;
 
-    ramos.push({ nombre, requisitos, aprobado: false, ciclo });
+    const creditosStr = prompt("¿Cuántos créditos tiene este ramo?");
+    const creditos = creditosStr ? parseInt(creditosStr) || 0 : 0;
+
+    ramos.push({ nombre, requisitos, aprobado: false, ciclo, creditos });
     guardarCarreraActual();
     renderMalla();
 }
@@ -53,7 +54,7 @@ function renderMalla() {
     const malla = document.getElementById("malla");
     malla.innerHTML = "";
 
-    const ciclos = {};  // Para agrupar ramos por ciclo (o área en el caso de Psicología)
+    const ciclos = {};
     ramos.forEach(ramo => {
         if (!ciclos[ramo.ciclo]) ciclos[ramo.ciclo] = [];
         ciclos[ramo.ciclo].push(ramo);
@@ -66,7 +67,7 @@ function renderMalla() {
         columna.className = "columna-ciclo";
 
         const titulo = document.createElement("h3");
-        titulo.textContent = `Ciclo: ${ciclo}`;
+        titulo.textContent = `Ciclo ${ciclo}`;
         columna.appendChild(titulo);
 
         ciclos[ciclo].forEach(ramo => {
@@ -80,12 +81,12 @@ function renderMalla() {
 
             if (!requisitosCumplidos && ramo.requisitos.length > 0) {
                 div.classList.add("bloqueado");
-                div.innerHTML = `${ramo.nombre}<br><small>Requiere: ${ramo.requisitos.join(", ")}</small>`;
+                div.innerHTML = `${ramo.nombre}<br><small>${ramo.creditos} créditos</small><div class="tooltip">Requiere: ${ramo.requisitos.join(", ")}</div>`;
             } else {
                 if (ramo.aprobado) {
                     div.classList.add("aprobado");
                 }
-                div.innerHTML = `${ramo.nombre}`;
+                div.innerHTML = `${ramo.nombre}<br><small>${ramo.creditos} créditos</small>`;
             }
 
             div.onclick = () => {
@@ -124,103 +125,104 @@ function reiniciarProgreso() {
     }
 }
 
-
-// Malla Ingeniería Civil en Informática
 function precargarMalla() {
-  carrera = "Ingeniería Civil en Informática";
-  ramos = [
-    // Semestre I
-    { nombre: "Introducción a la matemática", requisitos: [], aprobado: false, ciclo: "I", creditos: 11 },
-    { nombre: "Química", requisitos: [], aprobado: false, ciclo: "I", creditos: 5 },
-    { nombre: "Taller de la introducción a la ingeniería informática", requisitos: [], aprobado: false, ciclo: "I", creditos: 4 },
-    { nombre: "Programación", requisitos: [], aprobado: false, ciclo: "I", creditos: 7 },
-    { nombre: "Habilidades comunicativas para ingenieros", requisitos: [], aprobado: false, ciclo: "I", creditos: 5 },
-    // Semestre II
-    { nombre: "Introducción al cálculo", requisitos: ["Introducción a la matemática"], aprobado: false, ciclo: "II", creditos: 6 },
-    { nombre: "Álgebra", requisitos: [], aprobado: false, ciclo: "II", creditos: 6 },
-    { nombre: "Introducción a la física", requisitos: [], aprobado: false, ciclo: "II", creditos: 7 },
-    { nombre: "Programación orientada a objetos", requisitos: ["Programación"], aprobado: false, ciclo: "II", creditos: 5 },
-    { nombre: "Ciudadanía I", requisitos: [], aprobado: false, ciclo: "II", creditos: 2 },
-    { nombre: "Electivo AFI", requisitos: [], aprobado: false, ciclo: "II", creditos: 2 },
-    // Semestre III
-    { nombre: "Cálculo diferencial e integral", requisitos: ["Introducción al cálculo"], aprobado: false, ciclo: "III", creditos: 7 },
-    { nombre: "Álgebra superior", requisitos: ["Álgebra"], aprobado: false, ciclo: "III", creditos: 6 },
-    { nombre: "Física newtoniana", requisitos: ["Introducción a la física", "Introducción al cálculo"], aprobado: false, ciclo: "III", creditos: 7 },
-    { nombre: "Estructura de datos", requisitos: ["Programación"], aprobado: false, ciclo: "III", creditos: 6 },
-    { nombre: "Inglés I", requisitos: [], aprobado: false, ciclo: "III", creditos: 3 },
-    { nombre: "Taller de programación aplicada", requisitos: ["Programación orientada a objetos"], aprobado: false, ciclo: "III", creditos: 4 },
-     // Semestre IV
-    { nombre: "Cálculo multivariable", requisitos: ["Cálculo diferencial e integral"], aprobado: false, ciclo: "IV", creditos: 6 },
-    { nombre: "Autómatas y lenguajes formales", requisitos: [], aprobado: false, ciclo: "IV", creditos: 4 },
-    { nombre: "Electromagnetismo", requisitos: ["Física newtoniana", "Cálculo diferencial e integral"], aprobado: false, ciclo: "IV", creditos: 5 },
-    { nombre: "Modelamiento y paradigmas de programación", requisitos: [], aprobado: false, ciclo: "IV", creditos: 4 },
-    { nombre: "Inglés II", requisitos: ["Inglés I"], aprobado: false, ciclo: "IV", creditos: 3 },
-    { nombre: "Estructuras discretas", requisitos: ["Álgebra"], aprobado: false, ciclo: "IV", creditos: 5 },
-    { nombre: "Electivo AFI", requisitos: [], aprobado: false, ciclo: "IV", creditos: 2 },
+    carrera = "Ingeniería Civil en Informática";
+    ramos = [
+        // Semestre I
+        { nombre: "Introducción a la matemática", requisitos: [], aprobado: false, ciclo: "I", creditos: 11 },
+        { nombre: "Química", requisitos: [], aprobado: false, ciclo: "I", creditos: 5 },
+        { nombre: "Taller de la introducción a la ingeniería informática", requisitos: [], aprobado: false, ciclo: "I", creditos: 4 },
+        { nombre: "Programación", requisitos: [], aprobado: false, ciclo: "I", creditos: 7 },
+        { nombre: "Habilidades comunicativas para ingenieros", requisitos: [], aprobado: false, ciclo: "I", creditos: 5 },
+        // Semestre II
+        { nombre: "Introducción al cálculo", requisitos: ["Introducción a la matemática"], aprobado: false, ciclo: "II", creditos: 6 },
+        { nombre: "Álgebra", requisitos: [], aprobado: false, ciclo: "II", creditos: 6 },
+        { nombre: "Introducción a la física", requisitos: [], aprobado: false, ciclo: "II", creditos: 7 },
+        { nombre: "Programación orientada a objetos", requisitos: ["Programación"], aprobado: false, ciclo: "II", creditos: 5 },
+        { nombre: "Ciudadanía I", requisitos: [], aprobado: false, ciclo: "II", creditos: 2 },
+        { nombre: "Electivo AFI", requisitos: [], aprobado: false, ciclo: "II", creditos: 2 },
+        // Semestre III
+        { nombre: "Cálculo diferencial e integral", requisitos: ["Introducción al cálculo"], aprobado: false, ciclo: "III", creditos: 7 },
+        { nombre: "Álgebra superior", requisitos: ["Álgebra"], aprobado: false, ciclo: "III", creditos: 6 },
+        { nombre: "Física newtoniana", requisitos: ["Introducción a la física", "Introducción al cálculo"], aprobado: false, ciclo: "III", creditos: 7 },
+        { nombre: "Estructura de datos", requisitos: ["Programación"], aprobado: false, ciclo: "III", creditos: 6 },
+        { nombre: "Inglés I", requisitos: [], aprobado: false, ciclo: "III", creditos: 3 },
+        { nombre: "Taller de programación aplicada", requisitos: ["Programación orientada a objetos"], aprobado: false, ciclo: "III", creditos: 4 },
+         // Semestre IV
+        { nombre: "Cálculo multivariable", requisitos: ["Cálculo diferencial e integral"], aprobado: false, ciclo: "IV", creditos: 6 },
+        { nombre: "Autómatas y lenguajes formales", requisitos: [], aprobado: false, ciclo: "IV", creditos: 4 },
+        { nombre: "Electromagnetismo", requisitos: ["Física newtoniana", "Cálculo diferencial e integral"], aprobado: false, ciclo: "IV", creditos: 5 },
+        { nombre: "Modelamiento y paradigmas de programación", requisitos: [], aprobado: false, ciclo: "IV", creditos: 4 },
+        { nombre: "Inglés II", requisitos: ["Inglés I"], aprobado: false, ciclo: "IV", creditos: 3 },
+        { nombre: "Estructuras discretas", requisitos: ["Álgebra"], aprobado: false, ciclo: "IV", creditos: 5 },
+        { nombre: "Electivo AFI", requisitos: [], aprobado: false, ciclo: "IV", creditos: 2 },
 
-    // Semestre V
-    { nombre: "Ecuaciones diferenciales", requisitos: ["Cálculo multivariable"], aprobado: false, ciclo: "V", creditos: 6 },
-    { nombre: "Estadística y probabilidad", requisitos: [], aprobado: false, ciclo: "V", creditos: 5 },
-    { nombre: "Física moderna y ondas", requisitos: [], aprobado: false, ciclo: "V", creditos: 4 },
-    { nombre: "Análisis y diseño de algoritmos", requisitos: [], aprobado: false, ciclo: "V", creditos: 5 },
-    { nombre: "Bases de datos", requisitos: ["Modelamiento y paradigmas de programación"], aprobado: false, ciclo: "V", creditos: 6 },
-    { nombre: "Inglés III", requisitos: ["Inglés II"], aprobado: false, ciclo: "V", creditos: 3 },
+        // Semestre V
+        { nombre: "Ecuaciones diferenciales", requisitos: ["Cálculo multivariable"], aprobado: false, ciclo: "V", creditos: 6 },
+        { nombre: "Estadística y probabilidad", requisitos: [], aprobado: false, ciclo: "V", creditos: 5 },
+        { nombre: "Física moderna y ondas", requisitos: [], aprobado: false, ciclo: "V", creditos: 4 },
+        { nombre: "Análisis y diseño de algoritmos", requisitos: [], aprobado: false, ciclo: "V", creditos: 5 },
+        { nombre: "Bases de datos", requisitos: ["Modelamiento y paradigmas de programación"], aprobado: false, ciclo: "V", creditos: 6 },
+        { nombre: "Inglés III", requisitos: ["Inglés II"], aprobado: false, ciclo: "V", creditos: 3 },
 
-    // Semestre VI
-    { nombre: "Cálculo numérico", requisitos: ["Cálculo multivariable"], aprobado: false, ciclo: "VI", creditos: 6 },
-    { nombre: "Ingeniería de sistemas", requisitos: [], aprobado: false, ciclo: "VI", creditos: 5 },
-    { nombre: "Bases de datos avanzadas", requisitos: ["Bases de datos"], aprobado: false, ciclo: "VI", creditos: 5 },
-    { nombre: "Tecnologías móviles y web", requisitos: [], aprobado: false, ciclo: "VI", creditos: 5 },
-    { nombre: "Taller de diseño digital", requisitos: ["Electromagnetismo"], aprobado: false, ciclo: "VI", creditos: 5 },
-    { nombre: "Inglés IV", requisitos: ["Inglés III"], aprobado: false, ciclo: "VI", creditos: 3 },
-    { nombre: "Electivo AFI", requisitos: [], aprobado: false, ciclo: "VI", creditos: 2 },
+        // Semestre VI
+        { nombre: "Cálculo numérico", requisitos: ["Cálculo multivariable"], aprobado: false, ciclo: "VI", creditos: 6 },
+        { nombre: "Ingeniería de sistemas", requisitos: [], aprobado: false, ciclo: "VI", creditos: 5 },
+        { nombre: "Bases de datos avanzadas", requisitos: ["Bases de datos"], aprobado: false, ciclo: "VI", creditos: 5 },
+        { nombre: "Tecnologías móviles y web", requisitos: [], aprobado: false, ciclo: "VI", creditos: 5 },
+        { nombre: "Taller de diseño digital", requisitos: ["Electromagnetismo"], aprobado: false, ciclo: "VI", creditos: 5 },
+        { nombre: "Inglés IV", requisitos: ["Inglés III"], aprobado: false, ciclo: "VI", creditos: 3 },
+        { nombre: "Electivo AFI", requisitos: [], aprobado: false, ciclo: "VI", creditos: 2 },
 
-    // Semestre VII
-    { nombre: "Economía", requisitos: [], aprobado: false, ciclo: "VII", creditos: 5 },
-    { nombre: "Gestión de empresas", requisitos: [], aprobado: false, ciclo: "VII", creditos: 5 },
-    { nombre: "Sistemas de información", requisitos: ["Ingeniería de sistemas"], aprobado: false, ciclo: "VII", creditos: 4 },
-    { nombre: "Taller de ingeniería informática", requisitos: ["Tecnologías móviles y web"], aprobado: false, ciclo: "VII", creditos: 5 },
-    { nombre: "Arquitectura de computadores", requisitos: [], aprobado: false, ciclo: "VII", creditos: 4 },
-    { nombre: "Inglés para informáticos I", requisitos: ["Inglés IV"], aprobado: false, ciclo: "VII", creditos: 3 },
-    { nombre: "Práctica intermedia", requisitos: ["Bases de datos"], aprobado: false, ciclo: "VII", creditos: 5 },
+        // Semestre VII
+        { nombre: "Economía", requisitos: [], aprobado: false, ciclo: "VII", creditos: 5 },
+        { nombre: "Gestión de empresas", requisitos: [], aprobado: false, ciclo: "VII", creditos: 5 },
+        { nombre: "Sistemas de información", requisitos: ["Ingeniería de sistemas"], aprobado: false, ciclo: "VII", creditos: 4 },
+        { nombre: "Taller de ingeniería informática", requisitos: ["Tecnologías móviles y web"], aprobado: false, ciclo: "VII", creditos: 5 },
+        { nombre: "Arquitectura de computadores", requisitos: [], aprobado: false, ciclo: "VII", creditos: 4 },
+        { nombre: "Inglés para informáticos I", requisitos: ["Inglés IV"], aprobado: false, ciclo: "VII", creditos: 3 },
+        { nombre: "Práctica intermedia", requisitos: ["Bases de datos"], aprobado: false, ciclo: "VII", creditos: 5 },
 
-    // Semestre VIII
-    { nombre: "Contabilidad y costos", requisitos: [], aprobado: false, ciclo: "VIII", creditos: 4 },
-    { nombre: "Ingeniería de software", requisitos: ["Modelamiento y paradigmas de programación"], aprobado: false, ciclo: "VIII", creditos: 5 },
-    { nombre: "Investigación operativa", requisitos: ["Álgebra superior"], aprobado: false, ciclo: "VIII", creditos: 5 },
-    { nombre: "Formulación y evaluación de proyectos", requisitos: [], aprobado: false, ciclo: "VIII", creditos: 5 },
-    { nombre: "Sistemas operativos", requisitos: ["Arquitectura de computadores"], aprobado: false, ciclo: "VIII", creditos: 5 },
-    { nombre: "Inglés para informáticos II", requisitos: ["Inglés para informáticos I"], aprobado: false, ciclo: "VIII", creditos: 3 },
-    { nombre: "Electivo AFI", requisitos: [], aprobado: false, ciclo: "VIII", creditos: 2 },
+        // Semestre VIII
+        { nombre: "Contabilidad y costos", requisitos: [], aprobado: false, ciclo: "VIII", creditos: 4 },
+        { nombre: "Ingeniería de software", requisitos: ["Modelamiento y paradigmas de programación"], aprobado: false, ciclo: "VIII", creditos: 5 },
+        { nombre: "Investigación operativa", requisitos: ["Álgebra superior"], aprobado: false, ciclo: "VIII", creditos: 5 },
+        { nombre: "Formulación y evaluación de proyectos", requisitos: [], aprobado: false, ciclo: "VIII", creditos: 5 },
+        { nombre: "Sistemas operativos", requisitos: ["Arquitectura de computadores"], aprobado: false, ciclo: "VIII", creditos: 5 },
+        { nombre: "Inglés para informáticos II", requisitos: ["Inglés para informáticos I"], aprobado: false, ciclo: "VIII", creditos: 3 },
+        { nombre: "Electivo AFI", requisitos: [], aprobado: false, ciclo: "VIII", creditos: 2 },
 
-    // Semestre IX
-    { nombre: "Inteligencia artificial", requisitos: ["Autómatas y lenguajes formales"], aprobado: false, ciclo: "IX", creditos: 5 },
-    { nombre: "Taller de ingeniería de software", requisitos: ["Ingeniería de software"], aprobado: false, ciclo: "IX", creditos: 5 },
-    { nombre: "Electivo profesional", requisitos: [], aprobado: false, ciclo: "IX", creditos: 5 },
-    { nombre: "Electivo profesional", requisitos: [], aprobado: false, ciclo: "IX", creditos: 5 },
-    { nombre: "Redes y comunicaciones", requisitos: [], aprobado: false, ciclo: "IX", creditos: 5 },
-    { nombre: "Innovación y emprendimientos en informática", requisitos: [], aprobado: false, ciclo: "IX", creditos: 5 },
+        // Semestre IX
+        { nombre: "Inteligencia artificial", requisitos: ["Autómatas y lenguajes formales"], aprobado: false, ciclo: "IX", creditos: 5 },
+        { nombre: "Taller de ingeniería de software", requisitos: ["Ingeniería de software"], aprobado: false, ciclo: "IX", creditos: 5 },
+        { nombre: "Electivo profesional", requisitos: [], aprobado: false, ciclo: "IX", creditos: 5 },
+        { nombre: "Electivo profesional", requisitos: [], aprobado: false, ciclo: "IX", creditos: 5 },
+        { nombre: "Redes y comunicaciones", requisitos: [], aprobado: false, ciclo: "IX", creditos: 5 },
+        { nombre: "Innovación y emprendimientos en informática", requisitos: [], aprobado: false, ciclo: "IX", creditos: 5 },
 
-    // Semestre X
-    { nombre: "Taller de integración tecnológica", requisitos: ["Taller de ingeniería de software"], aprobado: false, ciclo: "X", creditos: 5 },
-    { nombre: "Anteproyecto de título", requisitos: ["Noveno semestre aprobado"], aprobado: false, ciclo: "X", creditos: 5 },
-    { nombre: "Electivo profesional", requisitos: [], aprobado: false, ciclo: "X", creditos: 5 },
-    { nombre: "Electivo profesional", requisitos: [], aprobado: false, ciclo: "X", creditos: 5 },
-    { nombre: "Sistemas distribuidos", requisitos: ["Redes y comunicaciones"], aprobado: false, ciclo: "X", creditos: 5 },
-    { nombre: "Seguridad informática", requisitos: ["Taller de ingeniería informática"], aprobado: false, ciclo: "X", creditos: 5 },
+        // Semestre X
+        { nombre: "Taller de integración tecnológica", requisitos: ["Taller de ingeniería de software"], aprobado: false, ciclo: "X", creditos: 5 },
+        { nombre: "Anteproyecto de título", requisitos: ["Noveno semestre aprobado"], aprobado: false, ciclo: "X", creditos: 5 },
+        { nombre: "Electivo profesional", requisitos: [], aprobado: false, ciclo: "X", creditos: 5 },
+        { nombre: "Electivo profesional", requisitos: [], aprobado: false, ciclo: "X", creditos: 5 },
+        { nombre: "Sistemas distribuidos", requisitos: ["Redes y comunicaciones"], aprobado: false, ciclo: "X", creditos: 5 },
+        { nombre: "Seguridad informática", requisitos: ["Taller de ingeniería informática"], aprobado: false, ciclo: "X", creditos: 5 },
 
-    // Semestre XI
-    { nombre: "Proyecto de título", requisitos: ["Anteproyecto de título", "18 créditos"], aprobado: false, ciclo: "XI", creditos: 18 },
-    { nombre: "Práctica profesional", requisitos: ["Octavo semestre aprobado", "12 créditos"], aprobado: false, ciclo: "XI", creditos: 12 }
-  ];
+        // Semestre XI
+        { nombre: "Proyecto de título", requisitos: ["Anteproyecto de título", "18 créditos"], aprobado: false, ciclo: "XI", creditos: 18 },
+        { nombre: "Práctica profesional", requisitos: ["Octavo semestre aprobado", "12 créditos"], aprobado: false, ciclo: "XI", creditos: 12 }
+    ];
 
-  guardarCarreraActual();
-  renderMalla();
+
+
+    guardarCarreraActual();
+    renderMalla();
 }
 
-
-// --- Manejo de colores dinámicos ---
-
+// Precarga inicial si no hay carreras guardadas
+if (carreras.length === 0) {
+    precargarMalla();
+}
 function actualizarColor(variable, valor) {
   document.documentElement.style.setProperty(variable, valor);
 }
@@ -242,10 +244,4 @@ function resetColores() {
   actualizarColor("--color-fondo", "#f5f7fa");
   actualizarColor("--color-ramo-aprobado", "#c8facc");
   actualizarColor("--color-ramo-bloqueado", "#f8d7da");
-}
-
-// Precarga inicial si no hay carreras guardadas
-if (carreras.length === 0) {
-  precargarMalla();
-  renderMalla();
 }
